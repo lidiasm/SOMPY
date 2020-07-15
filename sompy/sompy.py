@@ -631,8 +631,9 @@ class SOM(object):
 
     def calculate_quantization_error(self):
         neuron_values = self.codebook.matrix[self.find_bmu(self._data)[0].astype(int)]
-        quantization_error = np.mean(np.abs(neuron_values - self._data))
-        return quantization_error
+        qe = np.mean(np.abs(neuron_values - self._data))
+        quantization_error = np.mean(np.sqrt(np.sum(np.square(neuron_values - self._data), axis=1)))
+        return [quantization_error, qe]
 
     def calculate_map_size(self, lattice):
         """
